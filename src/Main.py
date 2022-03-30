@@ -1,19 +1,22 @@
+from sympy import false
 import FifteenPuzzle as fp
 from util import *
 from queue import PriorityQueue
 import os
+from itertools import count
 
 # Tanya pengguna ingin input puzzle darimana
 print("~~~SELAMAT DATANG DI SOLVER 15PUZZLE~~~")
 print("Anda ingin input puzzle darimana?")
 print("1. Input puzzle dari file")
 print("2. Input puzzle secara acak")
-genPuzzle = int(input("Masukkan angka pilihan Anda: "))
-while genPuzzle < 1 or genPuzzle > 2:
+genPuzzle = input("Masukkan angka pilihan Anda: ")
+while genPuzzle != "1" and genPuzzle != "2":
     print("Pilihan tidak tersedia, silahkan masukkan angka 1 atau 2")
-    genPuzzle = int(input("Masukkan angka pilihan Anda: "))
+    genPuzzle = input("Masukkan angka pilihan Anda: ")
 
-if genPuzzle == 1:
+# Jika pengguna memilih 1
+if genPuzzle == "1":
     fileName = input("Masukkan nama file Anda (tanpa .txt): ")
     dirAwal = os.getcwd()
     arrOfDir = dirAwal.split("\\")
@@ -25,31 +28,69 @@ else:
     stateAwal = randPuzzle()
 
 # Buat objek puzzle
-puzzle = fp.FifteenPuzzle(stateAwal)
+root = fp.FifteenPuzzle(stateAwal)
+
+# Inisiasi variabel
+# Kedalaman tree didapat dari length list of prev moves
+listOfSimpulEkspan = []
+found = False
+solution = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]
+jumlahSimpulYangDibangkitkan = 0
+unique = count()
 
 # Cek apakah puzzle solvable
-if not puzzle.isPuzzleSolvable():
+if not root.isPuzzleSolvable():
     print("PUZZLE TIDAK DAPAT DISELESAIKAN")
-    print(puzzle)
-    puzzle.printInfo()
+    print(root)
+    root.printInfo()
 else:
     # Buat prioqueue simpul hidup
+    # Isi dari queue adalah (priority, [puzzle, [list of prev moves]])
     simpulHidup = PriorityQueue()
-    print(puzzle)
-    puzzle.printInfo()
-    simpulHidup.put((puzzle.g(), [puzzle, "up"]))
-    simpulHidup.put((6, [puzzle, "up"]))
-    simpulHidup.put((4, [puzzle, "up"]))
+    print(root)
+    root.printInfo()
+    # Insert akar ke listOfSimpulEkspan dan simpul hidup
+    simpulHidup.put((1, next(unique), [root, []]))
+    listOfSimpulEkspan.append(root)
 
-    # print(puzzle.cekLegalMove())
-    while not simpulHidup.empty():
-        puzzle = simpulHidup.get()
-        print(f"Priority-nya adalah {puzzle[0]}")
-        print(puzzle[1][0])
-
-# print(p)
-# print(f"Ada {p.g()} ubin yang tidak sesuai tempat")
-# p.moveLeft()
-# p.moveDown()
-# print(p)
-# print(f"Ada {p.g()} ubin yang tidak sesuai tempat")
+    # Cek apakah root sudah solusi
+    if root.isEqualtoArray(solution):
+        # print waktu yang dilewati
+        # print jumlah simpul yang dibangkitkan
+        print(root)
+        print(f"Jumlah simpul yang dibangkitkan: {jumlahSimpulYangDibangkitkan}")
+    else:
+        simpulEkspan = simpulHidup.get()
+        # tambahkan simpul hidup yang mungkin dari root
+        legalMoves = simpulEkspan[2][0].getLegalMove()
+        for move in legalMoves:
+            # Buat simpul baru
+            simpulBaru = fp.FifteenPuzzle(simpulEkspan[2][0].puzzle.copy())
+            simpulBaru.move(move)
+            # Masukkan simpul baru ke simpul hidup
+            priority = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
+            listOfPrevMoves = simpulEkspan[2][1] + [move]
+            simpulHidup.put((priority, next(unique), [simpulBaru, listOfPrevMoves]))
+            jumlahSimpulYangDibangkitkan += 1
+        while not found and not simpulHidup.empty():
+            simpulEkspan = simpulHidup.get()
+            if simpulEkspan[2][0].isEqualtoArray(solution):
+                found = True
+                # print langkah langkah simpul
+                for move in simpulEkspan[2][1]:
+                    root.move(move)
+                    print(root)
+                print(f"Jumlah simpul yang dibangkitkan: {jumlahSimpulYangDibangkitkan}")
+                print(f"list moves: {simpulEkspan[2][1]}")
+            else:
+                # Bangkitkan anaknya
+                legalMoves = simpulEkspan[2][0].getLegalMove()
+                for move in legalMoves:
+                    # Buat simpul baru
+                    simpulBaru = fp.FifteenPuzzle(simpulEkspan[2][0].puzzle.copy())
+                    simpulBaru.move(move)
+                    # Masukkan simpul baru ke simpul hidup
+                    priority = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
+                    listOfPrevMoves = simpulEkspan[2][1] + [move]
+                    simpulHidup.put((priority, next(unique), [simpulBaru, listOfPrevMoves]))
+                    jumlahSimpulYangDibangkitkan += 1

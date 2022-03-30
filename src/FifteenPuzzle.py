@@ -14,12 +14,11 @@ class FifteenPuzzle:
   
   # Untuk print puzzle
   def __str__(self):
-    print("")
+    print("\nState Puzzle:")
     for i in range(16):
       print(self.puzzle[i], end=" ")
       if (i+1) % 4 == 0:
         print("")
-    print(f"Null Position: {self.nullPosition}") # jangan lupa hapus
     return ""
   
   def printInfo(self):
@@ -131,9 +130,20 @@ class FifteenPuzzle:
     elif move == 3:
       self.moveRight()
   
-  # Method untuk mengecek apakah puzzle bisa gerak ke atas, bawah, kiri, atau kanan. 0 untuk atas, 1 untuk bawah
+  # Method untuk menggerakkan puzzle tetapi berlawanan dengan enum move
+  def moveOpposite(self, move):
+    if move == 0:
+      self.moveDown()
+    elif move == 1:
+      self.moveUp()
+    elif move == 2:
+      self.moveRight()
+    elif move == 3:
+      self.moveLeft()
+  
+  # Method untuk mendapatkan gerak puzzle ke atas, bawah, kiri, atau kanan. 0 untuk atas, 1 untuk bawah
   # 2 untuk kiri, 3 untuk kanan
-  def cekLegalMove(self):
+  def getLegalMove(self):
     # Return array dari move yang legal, dalam bentuk enumerasi
     cond1 = 0 <= self.nullPosition <= 3
     cond2 = 12 <= self.nullPosition <= 15
@@ -160,5 +170,20 @@ class FifteenPuzzle:
         return [0, 1, 2]
       else:
         return [0, 1, 2, 3]
-   
-''' TODO: - '''
+  
+  # Method untuk mengecek apakah kedua puzzle sama
+  def isEqualtoPuzzle(self, puzzle):
+    return self.puzzle == puzzle.puzzle
+  
+  def isEqualtoArray(self, array):
+    return self.puzzle == array
+
+  def getOppositeMove(move):
+    if move == 0:
+      return 1
+    elif move == 1:
+      return 0
+    elif move == 2:
+      return 3
+    elif move == 3:
+      return 2

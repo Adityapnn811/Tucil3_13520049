@@ -20,3 +20,10 @@ def randPuzzle():
         if num not in puzzle:
             puzzle.append(num)
     return puzzle
+
+def hasPuzzleGotChecked(puzzle, listOfSimpulEkspan):
+    # Returns True if the puzzle is in list of Simpul Ekspan
+    for puzzle2 in listOfSimpulEkspan:
+        if puzzle.isEqual(puzzle2):
+            return True
+    return False
