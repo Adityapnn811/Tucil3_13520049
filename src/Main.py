@@ -1,9 +1,9 @@
-from sympy import false
 import FifteenPuzzle as fp
 from util import *
 from queue import PriorityQueue
 import os
 from itertools import count
+import time
 
 # Tanya pengguna ingin input puzzle darimana
 print("~~~SELAMAT DATANG DI SOLVER 15PUZZLE~~~")
@@ -38,11 +38,16 @@ solution = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]
 jumlahSimpulYangDibangkitkan = 0
 unique = count()
 
+# Mulai waktu dari sini
+startTime = time.time()
+
 # Cek apakah puzzle solvable
 if not root.isPuzzleSolvable():
-    print("PUZZLE TIDAK DAPAT DISELESAIKAN")
+    print("15PUZZLE TIDAK DAPAT DISELESAIKAN")
     print(root)
     root.printInfo()
+    endTime = time.time()
+    print("Lama eksekusi program adalah: " + str(endTime - startTime) + " detik")
 else:
     # Buat prioqueue simpul hidup
     # Isi dari queue adalah (priority, [puzzle, [list of prev moves]])
@@ -55,10 +60,10 @@ else:
 
     # Cek apakah root sudah solusi
     if root.isEqualtoArray(solution):
-        # print waktu yang dilewati
-        # print jumlah simpul yang dibangkitkan
+        endTime = time.time()
         print(root)
         print(f"Jumlah simpul yang dibangkitkan: {jumlahSimpulYangDibangkitkan}")
+        print("Lama eksekusi program adalah: " + str(endTime - startTime) + " detik")
     else:
         simpulEkspan = simpulHidup.get()
         # tambahkan simpul hidup yang mungkin dari root
@@ -76,21 +81,28 @@ else:
             simpulEkspan = simpulHidup.get()
             if simpulEkspan[2][0].isEqualtoArray(solution):
                 found = True
+                endTime = time.time()
                 # print langkah langkah simpul
+                print("LANGKAH PENYELESAIAN:")
+                i = 1
                 for move in simpulEkspan[2][1]:
+                    print("Langkah ke-" + str(i) + ":")
                     root.move(move)
                     print(root)
+                    i += 1
                 print(f"Jumlah simpul yang dibangkitkan: {jumlahSimpulYangDibangkitkan}")
-                print(f"list moves: {simpulEkspan[2][1]}")
+                print("Lama eksekusi program adalah: " + str(endTime - startTime) + " detik")
             else:
                 # Bangkitkan anaknya
                 legalMoves = simpulEkspan[2][0].getLegalMove()
                 for move in legalMoves:
-                    # Buat simpul baru
-                    simpulBaru = fp.FifteenPuzzle(simpulEkspan[2][0].puzzle.copy())
-                    simpulBaru.move(move)
-                    # Masukkan simpul baru ke simpul hidup
-                    priority = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
-                    listOfPrevMoves = simpulEkspan[2][1] + [move]
-                    simpulHidup.put((priority, next(unique), [simpulBaru, listOfPrevMoves]))
-                    jumlahSimpulYangDibangkitkan += 1
+                    # Cek apakah move kebalikan dari move sebelumnya
+                    if not move == simpulEkspan[2][0].getOppositeMove(simpulEkspan[2][1][-1]):
+                        # Buat simpul baru
+                        simpulBaru = fp.FifteenPuzzle(simpulEkspan[2][0].puzzle.copy())
+                        simpulBaru.move(move)
+                        # Masukkan simpul baru ke simpul hidup
+                        priority = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
+                        listOfPrevMoves = simpulEkspan[2][1] + [move]
+                        simpulHidup.put((priority, next(unique), [simpulBaru, listOfPrevMoves]))
+                        jumlahSimpulYangDibangkitkan += 1

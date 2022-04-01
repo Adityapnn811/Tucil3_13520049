@@ -25,7 +25,7 @@ class FifteenPuzzle:
     print("KURANG(i):")
     for i in range(1, len(self.kurang)):
       print(f"{i}\t: {self.kurang[i]}")
-    print(f"Total KURANG(i) + X: {self.totalKurang()}")
+    print(f"Total KURANG(i) + X: {self.totalKurang()}\n")
 
   # Untuk mengecek apakah ubin kosong ada di indeks ganjil atau genap, return 1 jika ganjil
   def cekUbinKosong(self):
@@ -178,7 +178,7 @@ class FifteenPuzzle:
   def isEqualtoArray(self, array):
     return self.puzzle == array
 
-  def getOppositeMove(move):
+  def getOppositeMove(self, move):
     if move == 0:
       return 1
     elif move == 1:
