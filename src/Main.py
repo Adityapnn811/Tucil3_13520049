@@ -32,11 +32,11 @@ root = fp.FifteenPuzzle(stateAwal)
 
 # Inisiasi variabel
 # Kedalaman tree didapat dari length list of prev moves
-listOfSimpulEkspan = []
+listOfSimpulEkspan = {}
 found = False
 solution = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]
 jumlahSimpulYangDibangkitkan = 0
-unique = count()
+unique = 0
 
 # Mulai waktu dari sini
 startTime = time.time()
@@ -55,8 +55,8 @@ else:
     print(root)
     root.printInfo()
     # Insert akar ke listOfSimpulEkspan dan simpul hidup
-    simpulHidup.put((1, next(unique), [root, []]))
-    listOfSimpulEkspan.append(root)
+    simpulHidup.put((1, unique, [root, []]))
+    listOfSimpulEkspan[(*root.puzzle,)] = True
 
     # Cek apakah root sudah solusi
     if root.isEqualtoArray(solution):
@@ -73,10 +73,12 @@ else:
             simpulBaru = fp.FifteenPuzzle(simpulEkspan[2][0].puzzle.copy())
             simpulBaru.move(move)
             # Masukkan simpul baru ke simpul hidup
-            priority = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
+            cost = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
             listOfPrevMoves = simpulEkspan[2][1] + [move]
-            simpulHidup.put((priority, next(unique), [simpulBaru, listOfPrevMoves]))
+            simpulHidup.put((cost, unique - 1, [simpulBaru, listOfPrevMoves]))
+            unique -= 1
             jumlahSimpulYangDibangkitkan += 1
+            listOfSimpulEkspan[(*simpulBaru.puzzle,)] = True
         while not found and not simpulHidup.empty():
             simpulEkspan = simpulHidup.get()
             if simpulEkspan[2][0].isEqualtoArray(solution):
@@ -101,8 +103,12 @@ else:
                         # Buat simpul baru
                         simpulBaru = fp.FifteenPuzzle(simpulEkspan[2][0].puzzle.copy())
                         simpulBaru.move(move)
-                        # Masukkan simpul baru ke simpul hidup
-                        priority = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
-                        listOfPrevMoves = simpulEkspan[2][1] + [move]
-                        simpulHidup.put((priority, next(unique), [simpulBaru, listOfPrevMoves]))
-                        jumlahSimpulYangDibangkitkan += 1
+                        if not (*simpulBaru.puzzle,) in listOfSimpulEkspan:
+                            # Masukkan simpul baru ke simpul hidup
+                            cost = len(simpulEkspan[2][1]) + 1 + simpulBaru.g()
+                            listOfPrevMoves = simpulEkspan[2][1] + [move]
+                            simpulHidup.put((cost, unique - 1, [simpulBaru, listOfPrevMoves]))
+                            unique -= 1
+                            jumlahSimpulYangDibangkitkan += 1
+                            listOfSimpulEkspan[(*simpulBaru.puzzle,)] = True
+
