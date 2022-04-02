@@ -2,7 +2,6 @@ import FifteenPuzzle as fp
 from util import *
 from queue import PriorityQueue
 import os
-from itertools import count
 import time
 
 # Tanya pengguna ingin input puzzle darimana
@@ -10,19 +9,19 @@ print("~~~SELAMAT DATANG DI SOLVER 15PUZZLE~~~")
 print("Anda ingin input puzzle darimana?")
 print("1. Input puzzle dari file")
 print("2. Input puzzle secara acak")
-genPuzzle = input("Masukkan angka pilihan Anda: ")
+genPuzzle = input("Masukkan angka pilihan Anda: \n> ")
 while genPuzzle != "1" and genPuzzle != "2":
     print("Pilihan tidak tersedia, silahkan masukkan angka 1 atau 2")
-    genPuzzle = input("Masukkan angka pilihan Anda: ")
+    genPuzzle = input("Masukkan angka pilihan Anda: \n> ")
 
 # Jika pengguna memilih 1
 if genPuzzle == "1":
-    fileName = input("Masukkan nama file Anda (tanpa .txt): ")
+    fileName = input("Masukkan nama file Anda (tanpa .txt): \n> ")
     dirAwal = os.getcwd()
     arrOfDir = dirAwal.split("\\")
     if arrOfDir[-1] == "src":
         dirAwal = os.path.dirname(dirAwal)
-    dirAwal += "\\input\\"
+    dirAwal += "\\test\\"
     stateAwal = txtToArray(dirAwal + fileName + ".txt")
 else:
     stateAwal = randPuzzle()
@@ -43,10 +42,10 @@ startTime = time.time()
 
 # Cek apakah puzzle solvable
 if not root.isPuzzleSolvable():
-    print("15PUZZLE TIDAK DAPAT DISELESAIKAN")
     print(root)
     root.printInfo()
     endTime = time.time()
+    print("15PUZZLE TIDAK DAPAT DISELESAIKAN")
     print("Lama eksekusi program adalah: " + str(endTime - startTime) + " detik")
 else:
     # Buat prioqueue simpul hidup
@@ -92,6 +91,7 @@ else:
                     root.move(move)
                     print(root)
                     i += 1
+                print("Puzzle dapat diselesaikan!")
                 print(f"Jumlah simpul yang dibangkitkan: {jumlahSimpulYangDibangkitkan}")
                 print("Lama eksekusi program adalah: " + str(endTime - startTime) + " detik")
             else:
