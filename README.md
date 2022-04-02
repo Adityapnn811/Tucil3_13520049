@@ -57,7 +57,7 @@ Environment:
 6. Jika Anda menggunakan Linux based system dan direktori saat ini di parent src, run `Main.py` dengan perintah `python3 src/Main.py`
 7. Jika Anda menggunakan Linux based system dan direktori saat ini di src, run `Main.py` dengan perintah `python3 Main.py`
 8. Pilih cara untuk load puzle ke program
-9. Jika Anda ingin memasukkan puzzle dari file, file tersebut harus berupa `.txt` dengan representasi ubin kosong adalah angka `0` dan satu baris terdiri dari 4 angka yang dipisahkan oleh satu buat spasi atau ` `
+9. Jika Anda ingin memasukkan puzzle dari file, file tersebut harus berupa `.txt` dengan representasi ubin kosong adalah angka `0` dan satu baris terdiri dari 4 angka yang dipisahkan oleh satu buat spasi atau `' '`
 10. Tekan `enter` dan program akan mengeluarkan output
 
 ## DISCLAIMER
