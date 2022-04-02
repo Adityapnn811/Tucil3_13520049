@@ -60,5 +60,8 @@ Environment:
 9. Jika Anda ingin memasukkan puzzle dari file, file tersebut harus berupa `.txt` dengan representasi ubin kosong adalah angka `0` dan satu baris terdiri dari 4 angka yang dipisahkan oleh satu buat spasi atau ` `
 10. Tekan `enter` dan program akan mengeluarkan output
 
+## DISCLAIMER
+Jika Anda memilih untuk melakukan generate puzzle menggunakan randomizer, besar kemungkinan program akan berjalan dengan waktu yang sangat lama dikarenakan keterbatasan algoritma.
+
 ## Author
 Aditya Prawira Nugroho - 13520049
