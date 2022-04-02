@@ -50,13 +50,15 @@ Environment:
 
 ## Cara Run Program
 1. Download repository ini atau lakukan clone repository
-2. Buka terminal pada folder repository ini, kemudian ganti direktori ke src dengan cara `cd src`
-3. Jika Anda menggunakan windows, run `main.py` dengan perintah `py main.py`
-4. Jika Anda menggunakan Linux based system, run `main.py` dengan perintah `python3 main.py`
-5. Pilih dataset yang Anda inginkan.
-6. Pilih kolom dari dataset yang Anda inginkan.
-7. Jika ingin menyimpan gambar, input nama file gambar.
-8. Gambar akan disimpan pada folder `src`.
+2. Buka terminal pada folder repository ini
+3. Anda bisa menjalankan program dari foler repository ini, atau masuk ke terminal, kemudian lakukan perintah `cd src`
+4. Jika Anda menggunakan windows dan direktori saat ini di parent src, run `Main.py` dengan perintah `py src/Main.py`
+5. Jika Anda menggunakan windows dan direktori saat ini di src, run `Main.py` dengan perintah `py Main.py`
+6. Jika Anda menggunakan Linux based system dan direktori saat ini di parent src, run `Main.py` dengan perintah `python3 src/Main.py`
+7. Jika Anda menggunakan Linux based system dan direktori saat ini di src, run `Main.py` dengan perintah `python3 Main.py`
+8. Pilih cara untuk load puzle ke program
+9. Jika Anda ingin memasukkan puzzle dari file, file tersebut harus berupa `.txt` dengan representasi ubin kosong adalah angka `0` dan satu baris terdiri dari 4 angka yang dipisahkan oleh satu buat spasi atau ` `
+10. Tekan `enter` dan program akan mengeluarkan output
 
 ## Author
 Aditya Prawira Nugroho - 13520049
