@@ -51,11 +51,11 @@ Environment:
 ## Cara Run Program
 1. Download repository ini atau lakukan clone repository
 2. Buka terminal pada folder repository ini
-3. Anda bisa menjalankan program dari foler repository ini, atau masuk ke terminal, kemudian lakukan perintah `cd src`
+3. Anda bisa menjalankan program dari folder repository ini atau masuk ke terminal, kemudian lakukan perintah `cd src`
 4. Jika direktori saat ini di parent dari folder src, run `Main.py` dengan perintah `py src/Main.py`
 5. Jika direktori saat ini di src, run `Main.py` dengan perintah `py Main.py`
-6. Pilih cara untuk load puzle ke program
-7. Jika Anda ingin memasukkan puzzle dari file, file tersebut harus berupa `.txt` dengan representasi ubin kosong adalah angka `0` dan 8atu baris terdiri dari 4 angka yang dipisahkan oleh satu buat spasi atau `' '`
+6. Pilih cara untuk load puzzle ke program
+7. Jika Anda ingin memasukkan puzzle dari file, file tersebut harus berupa `.txt` dengan representasi ubin kosong adalah angka `0` dan satu baris terdiri dari 4 angka yang dipisahkan oleh satu buah spasi atau `' '` dan angka bernilai dari 0 hingga 15
 9. Tekan `enter` dan program akan mengeluarkan output
 
 ## DISCLAIMER
