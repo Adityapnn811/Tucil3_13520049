@@ -3,6 +3,7 @@ from util import *
 from queue import PriorityQueue
 import os
 import time
+from os.path import exists
 
 # Tanya pengguna ingin input puzzle darimana
 print("~~~SELAMAT DATANG DI SOLVER 15PUZZLE~~~")
@@ -22,6 +23,9 @@ if genPuzzle == "1":
     if arrOfDir[-1] == "src":
         dirAwal = os.path.dirname(dirAwal)
     dirAwal += "\\test\\"
+    while not os.path.exists(dirAwal + fileName + ".txt"):
+        print("File tidak ditemukan, silahkan masukkan nama file yang benar")
+        fileName = input("Masukkan nama file Anda (tanpa .txt): \n> ")
     stateAwal = txtToArray(dirAwal + fileName + ".txt")
 else:
     stateAwal = randPuzzle()
@@ -45,7 +49,7 @@ if not root.isPuzzleSolvable():
     print(root)
     root.printInfo()
     endTime = time.time()
-    print("15PUZZLE TIDAK DAPAT DISELESAIKAN")
+    print("FIFTEEN PUZZLE TIDAK DAPAT DISELESAIKAN")
     print("Lama eksekusi program adalah: " + str(endTime - startTime) + " detik")
 else:
     # Buat prioqueue simpul hidup
