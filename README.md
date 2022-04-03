@@ -52,11 +52,10 @@ Environment:
 1. Download repository ini atau lakukan clone repository
 2. Buka terminal pada folder repository ini, kemudian ganti direktori ke src dengan cara `cd src`
 3. Jika Anda menggunakan windows, run `main.py` dengan perintah `py main.py`
-4. Jika Anda menggunakan Linux based system, run `main.py` dengan perintah `python3 main.py`
-5. Pilih dataset yang Anda inginkan.
-6. Pilih kolom dari dataset yang Anda inginkan.
-7. Jika ingin menyimpan gambar, input nama file gambar.
-8. Gambar akan disimpan pada folder `src`.
+4. Pilih dataset yang Anda inginkan.
+5. Pilih kolom dari dataset yang Anda inginkan.
+6. Jika ingin menyimpan gambar, input nama file gambar.
+7. Gambar akan disimpan pada folder `src`.
 
 ## Author
 Aditya Prawira Nugroho - 13520049
